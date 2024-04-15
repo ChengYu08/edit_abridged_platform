@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>一起变好</title>
+    <meta name="description" content="一起变好" />
+    <meta name="keywords" content="一起变好,一起,变好" />
+    <link
+      rel="shortcut icon"
+      href="https://hfresrc.oss-cn-hangzhou.aliyuncs.com/wechat/logo.png"
+    />
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: #eff0fb;
+    }
+    .container {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-image: url("./images/download_bg.webp");
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+      background-position: top;
+      background-color: #eff0fb;
+      position: relative;
+    }
+    .alert {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: none;
+    }
+    .btn_container {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+    }
+    .android_btn {
+      width: 40vw;
+      height: calc(40vw / 3);
+      background-image: url("./images/android_btn.webp");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      margin-right: 20px;
+      cursor: pointer;
+    }
+    .ios_btn {
+      width: 40vw;
+      height: calc(40vw / 3);
+      background-image: url("./images/ios_btn.webp");
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <img
+        class="alert"
+        onclick="document.querySelector('.alert').style.display = 'none'"
+        src="https://hytresource.oss-cn-hangzhou.aliyuncs.com/wechat/index-appDown-alert.png"
+      />
+      <div class="btn_container">
+        <div class="android_btn" onclick="downloadAndroidApp()"></div>
+        <div class="ios_btn" onclick="downloadIosApp()"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    // 跳转到使用本地的apk安装包
+    function downloadAndroidApp() {
+      var isWxOrAli = false;
+      if (/MicroMessenger/.test(window.navigator.userAgent)) {
+        isWxOrAli = true;
+      } else if (/AlipayClient/.test(window.navigator.userAgent)) {
+        isWxOrAli = true;
+      } else {
+        isWxOrAli = false;
+      }
+      if (isWxOrAli) {
+        document.querySelector(".alert").style.display = "block";
+        return;
+      }
+
+      saveFile(
+        "https://fhoss.46better.com/apk/app_for_better.apk?time=" + new Date(),
+        "app_for_better.apk"
+      );
+    }
+    function downloadIosApp() {
+      window.location.href =
+        "https://apps.apple.com/cn/app/%E4%B8%80%E8%B5%B7%E5%8F%98%E5%A5%BD/id6470769936";
+    }
+
+    // 下载文件
+    function saveFile(data, filename) {
+      var save_link = document.createElementNS(
+        "http://www.w3.org/1999/xhtml",
+        "a"
+      );
+      save_link.href = data;
+      save_link.download = filename;
+      var event = document.createEvent("MouseEvents");
+      event.initMouseEvent(
+        "click",
+        true,
+        false,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+      save_link.dispatchEvent(event);
+    }
+  </script>
+</html>
